@@ -1,15 +1,19 @@
 {
-  "name": "boiler",
+  "name": "fusekit",
   "version": "1.0.0",
   "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Apersant1/boiler.git"
+  },
   "scripts": {
     "start": "node bin/cli.js"
   },
   "bin": {
-    "boiler": "bin/cli.js"
+    "fusekit": "bin/cli.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "appersant1",
   "license": "ISC",
   "description": "",
   "dependencies": {
