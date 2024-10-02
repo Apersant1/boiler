@@ -1,16 +1,16 @@
 {
-  "name": "fusekit",
+  "name": "smeltery",
   "version": "1.0.0",
-  "main": "index.js",
+  "type": "module",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Apersant1/boiler.git"
+    "url": "https://github.com/Apersant1/boiler"
   },
   "scripts": {
-    "start": "node bin/cli.js"
+    "start": "node index.js"
   },
   "bin": {
-    "fusekit": "bin/cli.js"
+    "smeltery": "./index.js"
   },
   "keywords": [],
   "author": "appersant1",

@@ -1,5 +1,5 @@
 
-module.exports =(projectName) => `
+export default (projectName) => `
 import { IIntegration, IService, IBundle } from './interfaces';
 
 const integration:IIntegration={

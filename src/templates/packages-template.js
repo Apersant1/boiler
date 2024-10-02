@@ -1,5 +1,5 @@
 
-module.exports = (projectName) => 
+export default (projectName) => 
 `{
     "name": "${projectName}",
     "version": "1.0.0",
@@ -7,7 +7,7 @@ module.exports = (projectName) =>
     "main": "${projectName}.js",
     "scripts": {
       "start:dev": "tsc --watch ${projectName}.ts",
-      "build":"tsc",
+      "build":"tsc ${projectName}.ts",
       "docs": "node swagger.js"
     },
     "dependencies": {
