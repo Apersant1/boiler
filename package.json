@@ -1,0 +1,20 @@
+{
+  "name": "boiler",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node bin/cli.js"
+  },
+  "bin": {
+    "boiler": "bin/cli.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "chalk": "^5.3.0",
+    "cli-progress": "^3.12.0",
+    "inquirer": "^11.1.0"
+  }
+}
