@@ -18,7 +18,7 @@
 </p>
 
 <p align="center">
-  <a href="https://www.npmjs.com/package/ara-boilerplate">
+  <a href="https://www.npmjs.com/package/evilin">
     <img alt="npm" src="https://nodei.co/npm/evilin.png?compact=true">
   </a>
 </p>
