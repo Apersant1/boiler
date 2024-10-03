@@ -4,6 +4,7 @@ export default (projectName) =>
     "name": "${projectName}",
     "version": "1.0.0",
     "description": "",
+    "type":"module",
     "main": "${projectName}.js",
     "scripts": {
       "start:dev": "tsc --watch ${projectName}.ts",

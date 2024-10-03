@@ -1,6 +1,8 @@
-export default (projectName) =>
+export default (projectName,authData_fields) =>
 `
-interface IAuthData {}
+interface IAuthData {
+    ${authData_fields}
+}
 interface IIputData {}
 interface IResponse<T = any> {
     response: T;
@@ -19,7 +21,8 @@ export interface IService {
         jsonBody?: object
     }) => IResponse | IConnectResponse;
 
-
+    base64Encode: (data:any)=>string;
+    base64Decode: (hash:string) => string;
     hook: (hook: (url: string, headers: any) => any, guid: string, timeout: number) => string;
     error: {
         stringError: (message: string) => string;

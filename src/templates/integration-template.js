@@ -1,5 +1,5 @@
 
-export default (projectName) => `
+export default (projectName,connections) => `
 import { IIntegration, IService, IBundle } from './interfaces';
 
 const integration:IIntegration={
@@ -10,6 +10,6 @@ const integration:IIntegration={
         description: "UI для ${projectName}",
     },
     blocks:[],
-    connections:[]
+    connections:[${connections}]
 }
 `;
