@@ -1,10 +1,11 @@
 export default (projectName) => 
 `
-const express = require('express');
-const swaggerUI = require('swagger-ui-express');
-const YAML = require('yamljs');
-const swaggerDocument = YAML.load('./openapi.yaml');
-const cors = require('cors');
+import express from "express";
+import swaggerUI from "swagger-ui-express";
+import YAML from "yamljs";
+import cors from "cors";
+
+const swaggerDocument = YAML.load("./openapi.yaml");
 const app = express();
 
 const corsOptions = {
