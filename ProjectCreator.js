@@ -1,15 +1,10 @@
 import fs from "fs";
 import path from "path";
-import  inquirer from "inquirer";
-import {execSync } from "child_process";
-import chalk  from "chalk";
+import inquirer from "inquirer";
+import { execSync } from "child_process";
+import chalk from "chalk";
 
-import interfacesTemplate from "./src/templates/interfaces-template.js";
-import integrationTemplate from "./src/templates/integration-template.js";
-import packageTemplate from "./src/templates/packages-template.js"
-import swaggerTemplate from "./src/templates/swagger-template.js";
-import openapiTemplate from "./src/templates/openapi-template.js";
-import prettierTemplate from "./src/templates/prettier-config.js";
+import { interfacesTemplate, integrationTemplate, packageTemplate, swaggerTemplate, openapiTemplate, prettierTemplate, readmeTemplate } from "./src/templates/templates.js";
 
 
 import authTemplate from "./src/templates/basic-auth.js";
@@ -20,19 +15,20 @@ export class ProjectCreator {
 
   async createProject() {
     console.log(chalk.cyan('Создание нового проекта...'));
-    const {projectName,authMethod} = await this.askForProjectName();
+    const { projectName, authMethod } = await this.askForProjectName();
     console.log(chalk.green(`Проект ${projectName} создается...`));
     this.createProjectFolder(projectName);
-    this.createInterfacesFile(projectName,authMethod);
-    this.createIntegrationFile(projectName,authMethod);
+    this.createInterfacesFile(projectName, authMethod);
+    this.createIntegrationFile(projectName, authMethod);
     this.createPackageFile(projectName);
     this.createSwaggerDocs(projectName);
     this.createPrettierConfig(projectName);
-    //await this.installDependencies(projectName);
+    this.createReadmeFile(projectName);
+    await this.installDependencies(projectName);
     console.log(chalk.green(`Проект ${projectName} создан успешно!`));
-    console.log(`Для перехода в ${projectName}:`,chalk.yellow(`cd ${projectName}`));
-    console.log(`Для запуска ${projectName} `,chalk.yellow(`npm run start:dev`));
-    console.log(`Для запуска документации`,chalk.yellow('npm run docs'));
+    console.log(`Для перехода в ${projectName}:`, chalk.yellow(`cd ${projectName}`));
+    console.log(`Для запуска ${projectName} `, chalk.yellow(`npm run start:dev`));
+    console.log(`Для запуска документации`, chalk.yellow('npm run docs'));
   }
 
   askForProjectName() {
@@ -68,21 +64,21 @@ export class ProjectCreator {
     }
   }
 
-  createInterfacesFile(projectName,auth_type) {
+  createInterfacesFile(projectName, auth_type) {
     const interfacesPath = path.join(projectName, 'interfaces.d.ts');
     let authData_fields = ``
-    if(auth_type === "basic"){
-      authData_fields = 
-      `
+    if (auth_type === "basic") {
+      authData_fields =
+        `
       connection_login:string;
       connection_password: string;
       connection_base_url:string;
       url:string;
       passHash:string;
       `
-    } else if(auth_type === "oauth"){
+    } else if (auth_type === "oauth") {
       authData_fields =
-      `
+        `
       client_id:string;
       client_secret:string;
       redirect_url:string;
@@ -90,22 +86,22 @@ export class ProjectCreator {
       refreshToken:string;
       BASE_URL:string;
       `
-    } else if(auth_type ==="None"){
+    } else if (auth_type === "None") {
       authData_fields = ``
     }
-    
+
     try {
-      fs.writeFileSync(interfacesPath, interfacesTemplate(projectName,authData_fields));
+      fs.writeFileSync(interfacesPath, interfacesTemplate(projectName, authData_fields));
       console.log(chalk.green(`Файл interfaces.d.ts создан успешно!`));
     } catch (error) {
       console.error(chalk.red(`Ошибка создания файла interfaces.d.ts: ${error}`));
     }
   }
 
-  createIntegrationFile(projectName,auth_type) {
+  createIntegrationFile(projectName, auth_type) {
     const integrationPath = path.join(projectName, `${projectName}.ts`);
     try {
-      fs.writeFileSync(integrationPath, integrationTemplate(projectName,authTemplate(auth_type)));
+      fs.writeFileSync(integrationPath, integrationTemplate(projectName, authTemplate(auth_type)));
       console.log(chalk.green(`Файл ${projectName}.ts создан успешно!`));
     } catch (error) {
       console.error(chalk.red(`Ошибка создания файла ${projectName}.ts: ${error}`));
@@ -144,12 +140,20 @@ export class ProjectCreator {
       console.error(chalk.red(`Ошибка установки зависимостей: ${error}`));
     }
   }
-  createPrettierConfig(projectName){
+  createPrettierConfig(projectName) {
     const prettierPath = path.join(projectName, '.prettierrc');
     try {
       fs.writeFileSync(prettierPath, prettierTemplate(projectName));
     } catch (error) {
       console.error(chalk.red(`Ошибка создания файла конфигурации prettier: ${error}`));
+    }
+  }
+  createReadmeFile(projectName) {
+    const readmePath = path.join(projectName, 'readme.md');
+    try {
+      fs.writeFileSync(readmePath, readmeTemplate(projectName));
+    } catch (error) {
+      console.error(chalk.red(`Ошибка создания readme файла: ${error}`));
     }
   }
 }
