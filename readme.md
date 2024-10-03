@@ -1,18 +1,14 @@
 # Evilin
-================
 
 A project creator tool built with Node.js.
 
-## Table of Contents
------------------
-
-* [Installation](#installation)
-* [Usage](#usage)
-* [Features](#features)
-* [License](#license)
-* [Author](#author)
 
 ## Installation
----------------
+```bash
+npm i -g evilin
+```
+## Run
+```bash
+npx evilin
+```
 
-To install Evilin, run the following command:
