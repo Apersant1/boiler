@@ -1,3 +1,5 @@
+export default (projectName) =>
+`
 interface IAuthData {}
 interface IIputData {}
 interface IResponse<T = any> {
@@ -80,3 +82,4 @@ export interface IIntegration {
     blocks: IBlock[];
     connections: IConnection[];
 }
+`

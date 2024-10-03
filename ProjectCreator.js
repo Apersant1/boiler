@@ -4,10 +4,11 @@ import  inquirer from "inquirer";
 import {execSync } from "child_process";
 import chalk  from "chalk";
 
-
+import interfacesTemplate from "./src/templates/interfaces-template.js";
 import integrationTemplate from "./src/templates/integration-template.js";
 import packageTemplate from "./src/templates/packages-template.js"
-
+import swaggerTemplate from "./src/templates/swagger-template.js";
+import openapiTemplate from "./src/templates/openapi-template.js";
 
 export class ProjectCreator {
   constructor() {
@@ -25,7 +26,7 @@ export class ProjectCreator {
     this.createSwaggerDocs(projectName);
     await this.installDependencies(projectName);
     console.log(chalk.green(`Проект ${projectName} создан успешно!`));
-    сonsole.log(chalk.yellow(`Абсолютный путь к проекту: ${path.resolve(projectName)}`));
+    console.log(chalk.yellow(`Абсолютный путь к проекту: ${path.resolve(projectName)}`));
     console.log(chalk.yellow(`Для перехода в ${projectName}: 'cd ${projectName}'`));
     console.log(chalk.yellow(`Для запуска ${projectName} 'npm run start:dev'`));
     console.log(chalk.yellow(`Для запуска документации 'npm run docs'`));
@@ -53,7 +54,7 @@ export class ProjectCreator {
   createInterfacesFile(projectName) {
     const interfacesPath = path.join(projectName, 'interfaces.d.ts');
     try {
-      fs.copyFileSync("./src/templates/interfaces.d.ts", interfacesPath);
+      fs.writeFileSync(interfacesPath, interfacesTemplate(projectName));
       console.log(chalk.green(`Файл interfaces.d.ts создан успешно!`));
     } catch (error) {
       console.error(chalk.red(`Ошибка создания файла interfaces.d.ts: ${error}`));
@@ -83,9 +84,10 @@ export class ProjectCreator {
   createSwaggerDocs(projectName) {
     const swaggerPath = path.join(projectName, 'swagger.js');
     const openapiPath = path.join(projectName, 'openapi.yaml');
+
     try {
-      fs.copyFileSync("./src/templates/swagger.js", swaggerPath);
-      fs.copyFileSync("./src/templates/openapi.yaml", openapiPath);
+      fs.writeFileSync(swaggerPath, swaggerTemplate(projectName));
+      fs.writeFileSync(openapiPath, openapiTemplate(projectName));
       console.log(chalk.green(`Документация Swagger создана успешно!`));
     } catch (error) {
       console.error(chalk.red(`Ошибка создания документации Swagger: ${error}`));

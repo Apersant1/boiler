@@ -1,7 +1,9 @@
+export default(projectName)=>
+`
 openapi: 3.0.2
 info:
-  title: GitLab API
-  description: API for interacting with GitLab
+  title: ${projectName}
+  description: API for interacting with ${projectName}
   version: 1.0.0
 
 servers:
@@ -11,7 +13,7 @@ paths:
   /test:
     get:
       tags: 
-        - Шаблон
+        - ${projectName}
       summary: Шаблон
       security:
         - bearerAuth: []
@@ -22,3 +24,5 @@ paths:
             application/json:
               schema:
                 type: array
+
+`
