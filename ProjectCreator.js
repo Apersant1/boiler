@@ -9,7 +9,7 @@ import integrationTemplate from "./src/templates/integration-template.js";
 import packageTemplate from "./src/templates/packages-template.js"
 import swaggerTemplate from "./src/templates/swagger-template.js";
 import openapiTemplate from "./src/templates/openapi-template.js";
-
+import prettierTemplate from "./src/templates/prettier-config.js";
 export class ProjectCreator {
   constructor() {
     this.prompt = inquirer.createPromptModule();
@@ -24,6 +24,7 @@ export class ProjectCreator {
     this.createIntegrationFile(projectName);
     this.createPackageFile(projectName);
     this.createSwaggerDocs(projectName);
+    this.createPrettierConfig(projectName);
     await this.installDependencies(projectName);
     console.log(chalk.green(`Проект ${projectName} создан успешно!`));
     console.log(chalk.yellow(`Абсолютный путь к проекту: ${path.resolve(projectName)}`));
@@ -101,6 +102,14 @@ export class ProjectCreator {
       console.log(chalk.green(`Зависимости установлены успешно!`));
     } catch (error) {
       console.error(chalk.red(`Ошибка установки зависимостей: ${error}`));
+    }
+  }
+  createPrettierConfig(projectName){
+    const prettierPath = path.join(projectName, '.prettierrc');
+    try {
+      fs.writeFileSync(prettierPath, prettierTemplate(projectName));
+    } catch (error) {
+      console.error(chalk.red(`Ошибка создания файла конфигурации prettier: ${error}`));
     }
   }
 }
